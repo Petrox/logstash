@@ -67,6 +67,7 @@ module LogStash; class BasePipeline
     parsed_config = grammar.parse(config_str)
     raise(ConfigurationError, grammar.failure_reason) if parsed_config.nil?
 
+    parsed_config.process_escape_sequences = settings.get_value("config.support_escapes")
     config_code = parsed_config.compile
 
     # config_code = BasePipeline.compileConfig(config_str)
@@ -94,7 +95,7 @@ module LogStash; class BasePipeline
 
   def compile_lir
     source_with_metadata = SourceWithMetadata.new("str", "pipeline", 0, 0, self.config_str)
-    LogStash::Compiler.compile_sources(source_with_metadata)
+    LogStash::Compiler.compile_sources(source_with_metadata, @settings)
   end
 
   def plugin(plugin_type, name, *args)
