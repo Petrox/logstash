@@ -251,10 +251,22 @@ Example:
 A string must be a single character sequence. Note that string values are
 enclosed in quotes, either double or single. 
 
-By default, escape sequences are not enabled. If you wish to use escape
-sequences in quoted strings such as `\t` and `\"`, you will need to set
-`config.support_escapes: true` in your `logstash.yml`
+===== Escape Sequences
 
+By default, escape sequences are not enabled. If you wish to use escape
+sequences in quoted strings, you will need to set
+`config.support_escapes: true` in your `logstash.yml`. When `true`, quoted
+strings (double and single) will have this transformation:
+
+|===========================
+| Text | Result
+| \r   | carriage return (ASCII 13)
+| \n   | new line (ASCII 10)
+| \t   | tab (ASCII 9)
+| \\   | backslash (ASCII 92)
+| \"   | double quote (ASCII 34)
+| \'   | single quote (ASCII 39)
+|===========================
 
 Example:
 
